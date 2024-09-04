@@ -17,7 +17,9 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('admin')->middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin');
-    // Các route admin khác nếu cần
+    Route::get('/users', [AdminController::class, 'userList'])->name('admin.users');
+    Route::get('/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
+    Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
 });
 
 require __DIR__.'/auth.php';

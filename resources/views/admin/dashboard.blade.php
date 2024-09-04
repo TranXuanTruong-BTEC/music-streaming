@@ -28,7 +28,7 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.min.css') }}" />
 
@@ -132,7 +132,7 @@
             <div class="collapse" id="quanlytaikhoan">
                 <ul class="nav nav-collapse">
                     <li class="nav-item">
-                        <a href="#">
+                        <a href="{{ route('admin.users') }}">
                             <span class="sub-item">Danh sách Người dùng</span>
                         </a>
                     </li>
@@ -243,7 +243,7 @@
                         <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                             <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                                   aria-expanded="false" aria-haspopup="true">
+                                   aria-expanded="false">
                                     <i class="fa fa-search"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-search animated fadeIn">
@@ -309,13 +309,13 @@
         </div>
         <!-- End Main Panel -->
     </div>
-    <!-- Core JS Files -->
-    <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+<!-- Core JS Files -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
-    <!-- Other JS plugins and scripts -->
-    <!-- Include necessary plugins based on your dashboard requirements -->
+<!-- Other JS plugins and scripts -->
+@yield('scripts')
 </body>
 </html>
 @else

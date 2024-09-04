@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->is_admin == true; // hoặc logic phù hợp với cách bạn xác định admin
     }
+
+    public function getRole()
+    {
+        return $this->is_admin ? 'Admin' : 'User';
+    }
 }
