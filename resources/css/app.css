@@ -1,3 +1,16 @@
+/* Thêm vào đầu file CSS */
+html {
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body {
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+* {
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -44,19 +57,135 @@
     background-size: 400%;
     z-index: -1;
     filter: blur(5px);
-    transition: width 0.3s ease;
+    opacity: 0;
+    transition: all 0.5s ease;
 }
 
 .logo-animation:hover::before {
     width: 100%;
-    animation: rainbow 20s linear infinite;
+    opacity: 0.7;
+    animation: rainbow 8s linear infinite;
 }
 
 .logo-letter {
     display: inline-block;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .logo-animation:hover .logo-letter {
-    animation: shake 0.5s infinite;
+    animation: gentle-wave 2s ease-in-out infinite;
+}
+
+.logo-animation:hover .logo-letter:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.logo-animation:hover .logo-letter:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.logo-animation:hover .logo-letter:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.logo-animation:hover .logo-letter:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+.logo-animation:hover .logo-letter:nth-child(6) {
+    animation-delay: 0.5s;
+}
+
+.logo-animation:hover .logo-letter:nth-child(7) {
+    animation-delay: 0.6s;
+}
+
+/* Login Button */
+.login-button {
+    background: linear-gradient(45deg, #1DB954, #1ED760);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.login-button:hover::before {
+    opacity: 1;
+    transform: rotate(45deg) translate(50%, 50%);
+}
+
+/* Register Button */
+.register-button {
+    background: linear-gradient(45deg, #8E2DE2, #4A00E0);
+    position: relative;
+    overflow: hidden;
+}
+
+.register-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.register-button:hover::before {
+    opacity: 1;
+    transform: rotate(45deg) translate(50%, 50%);
+}
+
+/* Shared hover effect */
+.login-button:hover, .register-button:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(29, 185, 84, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(29, 185, 84, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(29, 185, 84, 0);
+    }
+}
+
+.login-button:focus {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.register-button:hover {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
 }
