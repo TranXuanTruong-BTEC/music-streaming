@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -47,11 +48,11 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->is_admin == true; // hoặc logic phù hợp với cách bạn xác định admin
+        return $this->role === 'admin';
     }
 
     public function getRole()
     {
-        return $this->is_admin ? 'Admin' : 'User';
+        return ucfirst($this->role);
     }
 }

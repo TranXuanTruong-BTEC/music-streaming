@@ -19,27 +19,70 @@ class AdminController extends Controller
         return view('admin.user-list', compact('users'));
     }
 
-    public function createUser()
-    {
-        return view('admin.user-create');
-    }
-
     public function storeUser(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'is_admin' => 'boolean',
+            'role' => 'required|in:user,admin',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'is_admin' => $request->is_admin ?? false,
-        ]);
+        try {
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,
+            ]);
+            return redirect()->route('admin.users')->with('success', 'Tài khoản đã được tạo thành công.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.users')->with('error', 'Có lỗi xảy ra khi tạo tài khoản: ' . $e->getMessage());
+        }
+    }
 
-        return redirect()->route('admin.users')->with('success', 'Tài khoản đã được tạo thành công.');
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        
+        $rules = [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+            'role' => 'required|in:user,admin',
+        ];
+
+        if ($request->filled('password')) {
+            $rules['password'] = 'required|string|min:8|confirmed';
+        }
+
+        $request->validate($rules);
+
+        try {
+            $userData = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'role' => $request->role,
+            ];
+
+            if ($request->filled('password')) {
+                $userData['password'] = Hash::make($request->password);
+            }
+
+            $user->update($userData);
+            return redirect()->route('admin.users')->with('success', 'Tài khoản đã được cập nhật thành công.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.users')->with('error', 'Có lỗi xảy ra khi cập nhật tài khoản: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        try {
+            $user->delete();
+            return redirect()->route('admin.users')->with('success', 'Tài khoản đã được xóa thành công.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.users')->with('error', 'Có lỗi xảy ra khi xóa tài khoản: ' . $e->getMessage());
+        }
     }
 }
