@@ -1,3 +1,4 @@
+@if(auth()->check() && auth()->user()->isAdmin())
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -317,3 +318,10 @@
     <!-- Include necessary plugins based on your dashboard requirements -->
 </body>
 </html>
+@else
+<div class="container mt-5">
+    <div class="alert alert-danger" role="alert">
+        Bạn không có quyền truy cập trang này. Vui lòng <a href="{{ route('login') }}">đăng nhập</a> với tài khoản có quyền admin.
+    </div>
+</div>
+@endif

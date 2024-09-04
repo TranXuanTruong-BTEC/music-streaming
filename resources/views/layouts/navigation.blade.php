@@ -55,6 +55,12 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            @if(Auth::user()->isAdmin())
+                                <x-dropdown-link :href="route('admin')">
+                                    {{ __('Go Dashboard') }}
+                                </x-dropdown-link>
+                            @endif
+
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>

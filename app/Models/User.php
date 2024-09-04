@@ -44,4 +44,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function isAdmin()
+    {
+        return $this->is_admin == true; // hoặc logic phù hợp với cách bạn xác định admin
+    }
 }
