@@ -2,78 +2,36 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Artist;
-use App\Services\ImageSearchService;
-use App\Services\UnsplashImageService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use App\Models\Artist;
+use App\Services\SpotifyService;
 
 class UpdateArtistImages extends Command
 {
     protected $signature = 'artists:update-images';
-    protected $description = 'Update artist images from various sources';
+    protected $description = 'Update images for all artists';
 
-    public function handle(ImageSearchService $googleImageService, UnsplashImageService $unsplashImageService)
+    protected $spotifyService;
+
+    public function __construct(SpotifyService $spotifyService)
     {
-        $artists = Artist::where('image_search_attempted', false)->get();
+        parent::__construct();
+        $this->spotifyService = $spotifyService;
+    }
+
+    public function handle()
+    {
+        $artists = Artist::whereNotNull('spotify_id')->get();
+
+        $bar = $this->output->createProgressBar(count($artists));
+        $bar->start();
 
         foreach ($artists as $artist) {
-            $this->info("Updating image for artist: {$artist->name}");
-
-            $existingArtist = Artist::where('name', $artist->name)
-                                    ->where('image_url', '!=', null)
-                                    ->first();
-
-            if ($existingArtist) {
-                $artist->image_url = $existingArtist->image_url;
-                $artist->image_search_attempted = true;
-                $artist->save();
-                $this->info("Used existing image for {$artist->name}");
-                continue;
-            }
-
-            $imageUrl = $this->searchImage($artist->name, $googleImageService, $unsplashImageService);
-
-            if ($imageUrl) {
-                $this->saveArtistImage($artist, $imageUrl);
-            } else {
-                $this->warn("No image found for artist: {$artist->name}");
-            }
-
-            $artist->image_search_attempted = true;
-            $artist->save();
-
-            sleep(2); // Add a small delay between requests
+            $this->spotifyService->fetchAndSaveArtistImage($artist);
+            $bar->advance();
         }
 
-        $this->info("Artist image update completed.");
-    }
-
-    private function searchImage($query, ...$services)
-    {
-        foreach ($services as $service) {
-            $imageUrl = $service->searchImage($query . " singer");
-            if ($imageUrl) {
-                return $imageUrl;
-            }
-        }
-        return null;
-    }
-
-    private function saveArtistImage($artist, $imageUrl)
-    {
-        try {
-            $imageContents = file_get_contents($imageUrl);
-            $filename = 'artists/' . Str::slug($artist->name) . '.jpg';
-            Storage::disk('public')->put($filename, $imageContents);
-
-            $artist->image_url = $filename;
-            $artist->save();
-
-            $this->info("Image updated successfully for {$artist->name}.");
-        } catch (\Exception $e) {
-            $this->error("Error saving image for {$artist->name}: " . $e->getMessage());
-        }
+        $bar->finish();
+        $this->info("\nArtist images update completed.");
     }
 }

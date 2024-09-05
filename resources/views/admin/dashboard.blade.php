@@ -82,7 +82,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#">
+                                        <a href="{{ route('admin.albums') }}">
                                             <span class="sub-item">Quản lý Album</span>
                                         </a>
                                     </li>

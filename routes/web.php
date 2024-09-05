@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Admin\AlbumController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -25,6 +26,7 @@ Route::prefix('admin')->middleware(['auth', AdminMiddleware::class])->group(func
     Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
     Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     Route::get('/admin/artists', [App\Http\Controllers\AdminController::class, 'artists'])->name('admin.artists');
+    Route::get('/admin/albums', [AlbumController::class, 'index'])->name('admin.albums');
 });
 
 require __DIR__.'/auth.php';

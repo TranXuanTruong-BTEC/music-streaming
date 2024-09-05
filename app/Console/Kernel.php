@@ -15,6 +15,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('spotify:fetch-new-releases')
                  ->dailyAt('06:00')
                  ->timezone('Asia/Ho_Chi_Minh');
+
+        $schedule->command('albums:remove-duplicates')->daily();
+
+        $schedule->command('data:remove-duplicates')->daily();
     }
 
     /**

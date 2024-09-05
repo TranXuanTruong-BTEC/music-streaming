@@ -9,15 +9,24 @@ class Album extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'artist_id'];
+    protected $fillable = ['name', 'artist_id', 'release_date', 'spotify_id', 'total_tracks'];
 
     public function artist()
     {
         return $this->belongsTo(Artist::class);
     }
 
-    public function songs()
+    public function tracks()
     {
-        return $this->hasMany(Song::class);
+        return $this->hasMany(Track::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($album) {
+            $album->tracks()->delete();
+        });
     }
 }

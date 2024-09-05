@@ -28,9 +28,9 @@
                             <td>{{ $artist->spotify_id }}</td>
                             <td>
                                 @if($artist->image_url)
-                                    <img src="{{ Storage::disk('public')->url($artist->image_url) }}" alt="{{ $artist->name }}" style="width: 50px; height: 50px; object-fit: cover;">
+                                    <img src="{{ asset('storage/' . $artist->image_url) }}" alt="{{ $artist->name }}" style="width: 100px; height: 100px; object-fit: cover;">
                                 @else
-                                    <img src="{{ asset('images/default-artist.jpg') }}" alt="{{ $artist->name }}" style="width: 50px; height: 50px; object-fit: cover;">
+                                    <img src="{{ asset('images/default-artist.jpg') }}" alt="{{ $artist->name }}" style="width: 100px; height: 100px; object-fit: cover;">
                                 @endif
                             </td>
                             <td>
