@@ -1,7 +1,7 @@
 @extends('admin.dashboard')
 
 @section('content')
-<div class="container-fluid" style="padding-top: 20px;"> <!-- Thêm padding-top ở đây -->
+<div class="container-fluid" style="padding-top: 75px;"> <!-- Thêm padding-top ở đây -->
     <h1 class="h3 mb-2 text-gray-800">Quản lý Nghệ sĩ</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">

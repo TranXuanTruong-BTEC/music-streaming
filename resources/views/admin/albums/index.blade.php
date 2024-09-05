@@ -1,7 +1,7 @@
 @extends('admin.dashboard')
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid" style="padding-top: 72px;">
     <h1 class="h3 mb-2 text-gray-800">Quản lý Album</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
