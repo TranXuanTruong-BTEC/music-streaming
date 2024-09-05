@@ -19,6 +19,15 @@ class Kernel extends ConsoleKernel
         $schedule->command('albums:remove-duplicates')->daily();
 
         $schedule->command('data:remove-duplicates')->daily();
+
+        // Cập nhật thông tin nghệ sĩ hàng ngày
+        $schedule->command('artists:update-images')->dailyAt('08:00');
+        
+        // Cập nhật thông tin album hàng ngày
+        $schedule->command('albums:update-tracks')->dailyAt('08:15');
+        
+        // Cập nhật số lượng bài hát trong album
+        $schedule->command('albums:update-track-counts')->dailyAt('08:30');
     }
 
     /**
