@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -30,3 +31,8 @@ require __DIR__.'/auth.php';
 Route::get('/test', function() {
     return 'Test route works!';
 });
+
+Route::get('/schedule-run', function () {
+    Artisan::call('schedule:run');
+    return 'Schedule run successfully';
+})->name('schedule.run');
