@@ -46,4 +46,9 @@ class SpotifyService
     {
         return $this->api->getTrack($trackId);
     }
+
+    public function getArtist($artistId)
+    {
+        return $this->api->getArtist($artistId);
+    }
 }

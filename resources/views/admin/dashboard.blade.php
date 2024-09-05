@@ -77,12 +77,7 @@
                             <div class="collapse" id="quanly">
                                 <ul class="nav nav-collapse">
                                     <li class="nav-item">
-                                        <a href="#">
-                                            <span class="sub-item">Quản lý Bài hát</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#">
+                                        <a href="{{ route('admin.artists') }}">
                                             <span class="sub-item">Quản lý Nghệ sĩ</span>
                                         </a>
                                     </li>
@@ -310,6 +305,8 @@
         <!-- End Main Panel -->
     </div>
 <!-- Core JS Files -->
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>

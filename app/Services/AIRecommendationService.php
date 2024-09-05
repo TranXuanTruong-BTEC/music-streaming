@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Song;
 use App\Models\Artist;
 use App\Models\Album;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class AIRecommendationService
 {
@@ -37,9 +39,22 @@ class AIRecommendationService
 
     protected function addAlbumTracks($album)
     {
+        $imageUrl = $album->artists[0]->images[0]->url ?? null;
+        $localImagePath = null;
+
+        if ($imageUrl) {
+            $imageContents = file_get_contents($imageUrl);
+            $filename = 'artists/' . Str::slug($album->artists[0]->name) . '_' . Str::random(10) . '.jpg';
+            Storage::disk('public')->put($filename, $imageContents);
+            $localImagePath = $filename;
+        }
+
         $artist = Artist::firstOrCreate(
             ['spotify_id' => $album->artists[0]->id],
-            ['name' => $album->artists[0]->name]
+            [
+                'name' => $album->artists[0]->name,
+                'image_url' => $localImagePath,
+            ]
         );
 
         $albumModel = Album::firstOrCreate(

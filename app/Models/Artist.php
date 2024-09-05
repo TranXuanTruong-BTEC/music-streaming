@@ -9,7 +9,7 @@ class Artist extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'spotify_id', 'image_url', 'image_search_attempted'];
 
     public function songs()
     {

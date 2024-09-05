@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Artist;
+use App\Services\SpotifyService;
 
 class AdminController extends Controller
 {
@@ -84,5 +86,22 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('admin.users')->with('error', 'Có lỗi xảy ra khi xóa tài khoản: ' . $e->getMessage());
         }
+    }
+
+    public function artists(SpotifyService $spotifyService)
+    {
+        $artists = Artist::paginate(15);
+        
+        foreach ($artists as $artist) {
+            if ($artist->spotify_id && !$artist->image_url) {
+                $spotifyArtist = $spotifyService->getArtist($artist->spotify_id);
+                if (isset($spotifyArtist->images[0]->url)) {
+                    $artist->image_url = $spotifyArtist->images[0]->url;
+                    $artist->save();
+                }
+            }
+        }
+        
+        return view('admin.artists.artists', compact('artists'));
     }
 }
