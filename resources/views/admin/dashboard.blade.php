@@ -99,7 +99,7 @@
                             <div class="collapse" id="amnhac">
                                 <ul class="nav nav-collapse">
                                     <li class="nav-item">
-                                        <a href="#">
+                                        <a href="{{ route('admin.tracks.index') }}">
                                             <span class="sub-item">Danh sách Bài hát</span>
                                         </a>
                                     </li>

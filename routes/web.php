@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Admin\AlbumController;
+use App\Http\Controllers\Admin\TrackController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -27,6 +28,9 @@ Route::prefix('admin')->middleware(['auth', AdminMiddleware::class])->group(func
     Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     Route::get('/admin/artists', [App\Http\Controllers\AdminController::class, 'artists'])->name('admin.artists');
     Route::get('/admin/albums', [AlbumController::class, 'index'])->name('admin.albums');
+    Route::get('/tracks', [App\Http\Controllers\Admin\TrackController::class, 'index'])->name('admin.tracks.index');
+    Route::post('/tracks/fetch', [TrackController::class, 'fetchTrack'])->name('admin.tracks.fetch'); // Đảm bảo route này có mặt
+    Route::get('/tracks/downloaded', [TrackController::class, 'downloadedAudios'])->name('admin.tracks.downloaded');
 });
 
 require __DIR__.'/auth.php';
